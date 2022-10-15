@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+{% load static%}
+
 {% block title %}{{ post.title_tag }}{% endblock %} 
 
 {% block content %}
-<h1>{{ post.title }}- {{ post.author.id}}</h1>
+<h1>{{ post.title }}</h1>
 <small>By: 
     {{ post.author.first_name}} 
     {{ post.author.last_name}} - 
@@ -18,14 +20,15 @@
 </small><br/>
 <hr>
 <br/>
+
+{% if post.header_image %}
+    <img src="{{ post.header_image.url }}"><br/><br/>
+{% endif%}
+
 {{ post.body|safe }}
-
-<br/><br/>
-<a href="{% url 'home' %}" class="btn btn-secondary btn-sm">Back</a>
-
-<br/><br/>
-<hr/>
 <br/>
+<hr/>
+
 <form action="{% url 'like_post' post.pk %}" method="POST">
     {% csrf_token %}
 
@@ -42,5 +45,76 @@
     - {{ total_likes}} Likes
 </form>
 
+<br/>
+<div class="card mb-3">
+    <div class="row no-gutters">
+        <div class="col-md-2">
+        {% if post.author.profile.profile_pic %}
+            <img src="{{ post.author.profile.profile_pic.url }}" class="card-img" width="200" height="200">
 
+        {% else %}
+            <img src="{% static 'theblog\images\default.png' %}" class="card-img" width="200" height="200">
+        {% endif %}
+        </div>
+        <div class="col-md-10">
+        <div class="card-body">
+            <h5 class="card-title">
+            {{ post.author.first_name}} 
+            {{ post.author.last_name}}
+            </h5>
+
+            <p class="small text-muted">
+                
+                {% if post.author.profile.id %}
+                    <a href="{% url 'show_profile_page' post.author.profile.id %}">Profile Page</a> 
+                {% endif %}
+
+                {% if post.author.profile.website_url %}
+                    | <a href="{{ post.author.profile.website_url }}"> Website</a>
+                {% endif %}
+
+                {% if post.author.profile.facebook_url %}
+                | <a href="{{ post.author.profile.facebook_url }}">Facebook</a>
+                {% endif %}
+                
+                {% if post.author.profile.twitter_url %}
+                    | <a href="{{ post.author.profile.twitter_url }}">Twitter</a> 
+                {% endif %}
+
+                {% if post.author.profile.instagram_url %}
+                    | <a href="{{ post.author.profile.instagram_url }}">Instagram</a>
+                {% endif %}
+
+                {% if post.author.profile.pinterest_url %} 
+                    | <a href="{{ post.author.profile.pinterest_url }}">Pinterest</a></p>
+                {% endif %}
+
+            <p class="card-text">{{ post.author.profile.bio }}</p>
+        </div>
+        </div>
+    </div>
+</div>
+
+    <br/>
+    <h1>Comments...</h1>
+    <br/>
+    {% if not post.comments.all %}
+        No Comments Yet...<a href="{% url 'add_comment' post.pk %}">  Add One</a>
+    {% else %}
+        <a href="{% url 'add_comment' post.pk %}">Add Comment</a>
+        <br/><br/>
+        {% for comment in post.comments.all %}
+            <strong>
+                {{ comment.name }} - 
+                {{ comment.date_added }}
+            </strong>
+            <br/>
+            {{ comment.body }}
+            <br/><br/>
+        {% endfor %}
+        <a href="{% url 'add_comment' post.pk %}">Add Comment</a>
+    {% endif %}
+
+ 
+  <br/><br/>
 {% endblock %} 
