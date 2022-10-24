@@ -15,7 +15,6 @@ class EditProfilePageForm(forms.ModelForm):
                 'twitter_url': forms.TextInput(attrs={'class':'form-control'}),
                 'instagram_url': forms.TextInput(attrs={'class':'form-control'}),
                 'pinterest_url': forms.TextInput(attrs={'class':'form-control'}),
-
         }
 
 class ProfilePageForm(forms.ModelForm):
@@ -30,7 +29,6 @@ class ProfilePageForm(forms.ModelForm):
                 'twitter_url': forms.TextInput(attrs={'class':'form-control'}),
                 'instagram_url': forms.TextInput(attrs={'class':'form-control'}),
                 'pinterest_url': forms.TextInput(attrs={'class':'form-control'}),
-
         }
 
 class SignUpForm(UserCreationForm):

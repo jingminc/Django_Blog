@@ -1,0 +1,48 @@
+<div class="col-md-8 mt-3 left">
+    {% for post in post_list %}
+    <div class="card mb-4  border-0">
+        <div class="card-body">
+            <h2 class="card-title"><a href="{% url 'article-detail' post.pk %}" class="text-dark">{{ post.title }}</a></h2>
+            <p class="card-text text-muted h6">
+                {{ post.author.first_name }} 
+                {{ post.author.last_name }}
+                | {{ post.post_date}} - <a href="{% url 'category' post.category %}">{{ post.category }}</a>
+                <small>
+                    {% if user.is_authenticated %}
+                        {% if user.id == post.author.id %}
+                            - <a href="{% url 'update_post' post.pk %}">(Edit)</a>
+                            <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
+                        {% endif %}
+                    {% endif %}
+                </small>
+
+            <div  class="display-flex">    
+                
+                {% if post.header_image %}
+                    <img src="{{ post.header_image.url }}" style="width: 150px;height: 120px;margin-right: 20px;">
+                {% endif %}
+                
+                </p>
+                <p class="card-text">{{post.body| safe | slice:":200" }}
+                </p>
+            </div>
+            <hr>
+            <div>
+            <span class="float-right">
+                <a href="{% url 'article-detail' post.pk %}" >Read More</a>
+            </span>
+            
+            <span class="float-left h6">
+                <a href="#"><i class="fa fa-comments"></i>&nbsp;{{ post.comments.all.count |default:0 }}</a>
+                &nbsp;&nbsp;&nbsp;
+                <a href="#"><i class="fa fa-eye c6"></i>&nbsp;{{ post.total_views|default:0 }}</a>
+                &nbsp;&nbsp;&nbsp;
+                <a href="#"><i class="fa fa-heart c7"></i>&nbsp;{{ post.total_likes |default:0 }}</a>
+                <a {% if article.creator.link %} href="{{ article.creator.link }}"{% endif %}></a>
+            </span>
+        </div>
+            <br>
+        </div>
+    </div>
+    {% endfor %}
+</div>

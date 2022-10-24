@@ -1,0 +1,68 @@
+{% load static %}
+{% block sidebar %}
+
+<style>
+    .card{
+        box-shadow: 0 16px 48px #E3E7EB; 
+    }
+
+    .list-group-item {
+        font-family:Lora; 
+        height: 28px;
+        line-height: 24px; 
+        padding: 0 8px;
+        color: #2d2e2f;
+        font-weight: 500;
+        border: 1px solid #fff;
+    }
+
+</style>
+
+<!-- Sidebar Widgets Column -->
+<div class="col-md-4 float-right ">
+    <div class="card my-4 mt-2 mb-0">
+        <div class="card-body text-center ">
+            <div class="jestify-content-center">
+                {% if user.profile.id %}
+                <img src="{{user.profile.profile_pic.url}}" class="rounded-circle" style="height: 100px;">
+                {% else %}
+                <img src="{% static 'theblog\images\default.png' %}" class="rounded-circle" style="height: 100px;">
+                {% endif %}
+                <h5 class="card-title text-dark mt-2">
+                    {{ user.first_name }}
+                    {{ user.last_name }}</h5>
+                <p class="card-text mb-2" style="font-size: 18px;font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; text-align: justify;"></p>
+                <hr>
+                <p>
+                <font size="5">
+                    {% if user.profile.id %}
+                    <a href="{% url 'show_profile_page' user.profile.id %}" class="text-reset "><i class="fa fa-user-circle"></i>&nbsp;</a>
+                    {% else %}
+                    <a href="{% url 'create_profile_page' %}" class="text-reset "><i class="fa fa-user-circle"></i>&nbsp;</a>
+                    {% endif %}
+                    <a href="{{ user.profile.facebook_url }}" class="text-reset "><i class="fa-brands fa-facebook"></i>&nbsp;</a>
+                    <a href="{ user.profile.twitter_url }" class="text-reset "><i class="fa-brands fa-square-twitter"></i>&nbsp;</a>
+                    <a href="{ user.profile.instagram_url }" class="text-reset "><i class="fa-brands fa-square-instagram"></i>&nbsp;</a>
+                </font>
+                </p>         
+            </div>
+        </div>
+    </div>
+
+    <div class="card my-4">
+        <h5 class="card-header"><strong>Catagory</strong></h5>
+            <div class="card-body">
+                <ul class="list-group list-group-flush ">
+                    
+                    {% for item in cat_menu %}
+                    <li class="list-group-item"><a style='color:black;' href="{% url 'category' item %}">{{ item }}</a></li>
+                    {% endfor %} 
+                    
+                  </ul>
+            </div>
+    </div>
+</div>
+
+
+
+{% endblock sidebar %}

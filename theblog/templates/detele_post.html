@@ -2,24 +2,30 @@
 {% block title %}Delete Blog Post{% endblock %} 
 {% block content %}
 
-{% if user.is_authenticated %}
-    {% if user.id == post.author.id %}
-        <h1>Delete Post...</h1>
-        <br/><br/>
-        <h3>Delete: {{ post.title }}</h3>
-        <br/>
-        <div class="form-group">
-            <form method="POST" action="">
-                {% csrf_token %}
-                <strong>Are you sure?!</strong><br/><br/>
-                <button class="btn btn-secondary">Delete</button>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mb-4  mt-3 left  top">
+            {% if user.is_authenticated %}
+                {% if user.id == post.author.id %}
+                    <h1>Delete Post...</h1>
+                    <br/><br/>
+                    <h3>Delete: {{ post.title }}</h3>
+                    <br/>
+                    <div class="form-group">
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <strong>Are you sure?!</strong><br/><br/>
+                            <button class="btn btn-secondary">Delete</button>
+                    </div>
+                {% else %}
+                You're not allowed here.
+                {% endif %}
+                
+            {% else %}
+            You're not allowed here.
+            {% endif %}
         </div>
-    {% else %}
-    You're not allowed here.
-    {% endif %}
-    
-{% else %}
-You're not allowed here.
-{% endif %}
+    </div>
+</div>
 
 {% endblock %} 

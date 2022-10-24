@@ -1,6 +1,12 @@
 from django.urls import path
+from django.contrib.sitemaps.views import sitemap
 #from . import views
 from .views import HomeView, ArticleDetailView, AddPostView, UpdatePostView, DeletePostView, AddCategoryView, CategoryView, CategoryListView, LikeView, AddCommentView
+from theblog.sitemaps import PostSitemap
+
+sitemaps = {
+    "posts": PostSitemap,
+}
 
 urlpatterns = [
     #path('', views.home, name='home'),
@@ -11,7 +17,8 @@ urlpatterns = [
     path('article/edit/<int:pk>', UpdatePostView.as_view(), name='update_post'),
     path('article/<int:pk>/delete', DeletePostView.as_view(), name='delete_post'),
     path('category/<str:cats>/', CategoryView, name='category'),
-    path('category-list/', CategoryListView, name='category-list'),
+    path('category_list/', CategoryListView, name='category_list'),
     path('like/<int:pk>', LikeView, name='like_post'),
     path('article/<int:pk>/comment', AddCommentView.as_view(), name='add_comment'),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
 ]

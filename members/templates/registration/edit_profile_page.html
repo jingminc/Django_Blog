@@ -3,23 +3,28 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
-    {% if user.id == profile.user.id %}
-        <h1>Edit Profile Page...</h1>
-        <br/>
-        <div class="form-group">
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.as_p }}
+<div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-4  mt-3 left  top">
+        {% if user.is_authenticated %}
+            {% if user.id == profile.user.id %}
+                <h1>Edit Profile Page</h1>
                 <br/>
-                <button class="btn btn-secondary">Update Profile Page</button>
-        </div>
-    {% else %}
-    You are not the correct user to edit this page.
-    {% endif %}
+                <div class="form-group">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <br/>
+                        <button class="btn btn-secondary">Update Profile Page</button>
+                </div>
+            {% else %}
+            You are not the correct user to edit this page.
+            {% endif %}
 
-{% else %}
-    You're not allowed here.
-{% endif %}
-        
+        {% else %}
+            You're not allowed here.
+        {% endif %}
+    </div>
+</div>
+    
 {% endblock %} 

@@ -2,23 +2,29 @@
 {% block title %}Edit Blog Post{% endblock %} 
 {% block content %}
 
-{% if user.is_authenticated %}
-    {% if user.id == post.author.id %}
-        <h1>Update Post...</h1>
-        <br/><br/>
-        <div class="form-group">
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ form.media }}
-                {{ form.as_p }}
-                <button class="btn btn-secondary">Post</button>
-        </div>
-        {% else %}
-        You're not allowed here.
-        {% endif %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mb-4  mt-3 left  top">
+            {% if user.is_authenticated %}
+                {% if user.id == post.author.id %}
+                    <h1>Update Post</h1>
+                    <br/><br/>
+                    <div class="form-group">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.media }}
+                            {{ form.as_p }}
+                            <button class="btn btn-secondary">Post</button>
+                    </div>
+                    {% else %}
+                    You're not allowed here.
+                    {% endif %}
 
-{% else %}
-You're not allowed here.
-{% endif %}
+            {% else %}
+            You're not allowed here.
+            {% endif %}
+        </div>
+    </div>
+</div>
 
 {% endblock %} 

@@ -1,27 +1,63 @@
 {% extends 'base.html' %}
+{% load static%}
 {% block title %}Login{% endblock %} 
 {% block content %}
 
-<h1>Login...</h1>
-<br/><br/>
-<div class="form-group">
-    <form method="POST">
-        {% csrf_token %}
-        <form>
-            <div class="form-group">
-              <input type="text" class="form-control col-sm-10" name="username" placeholder="Username">
+<style>
+  body {      
+    background: url('https://cdn.pixabay.com/photo/2018/01/12/14/24/night-3078326_1280.jpg');
+    background-size: cover;
+    color: #fff;
+    }
+  .card {
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.7),
+        );
+  }
+  .form-control {
+    border-radius: 50px;
+    background: transparent;
+  }
+  .submit{
+    border-radius: 50px;
+    width:100%;
+  }
+  
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 mt-3 top" style="margin:auto;">
+      <h1>Login</h1>
+      <br/><br/>
+      <div class="card" style="background: linear-gradient(
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.7))">
+        <div class="card-body">
+            <div class="d-flex justify-content-center">
+                <img src="{% static 'theblog\images\profile.png' %}" class='rounded=circle' width="140" height="140">
             </div>
-
             <div class="form-group">
-              <input type="password" class="form-control col-sm-10" name="password" placeholder="Password">
+              <form method="POST">
+                  {% csrf_token %}
+                  <form>
+                      <div class="form-group">
+                        <input type="text" class="form-control transparent-input" name="username" placeholder="Username">
+                      </div>
 
-            <br/>
-            <p id="emailHelp" class="form-text">Not A User? Sign Up <a href="{% url 'register' %}">Here</a>.</p>
+                      <div class="form-group">
+                        <input type="password" class="form-control " name="password" placeholder="Password">
+                      <br/>
+                      <p id="emailHelp" class="form-text">Not A User? Sign Up <a href="{% url 'register' %}">Here</a>.</p>
+                      </div>
+                      <br/>   
+                  <button class="btn btn-primary submit">Login</button>
             </div>
-            <br/>
-        
-        <button class="btn btn-secondary">Login</button>
-
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
+<br><br><br><br><br><br>
 {% endblock %} 

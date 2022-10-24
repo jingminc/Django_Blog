@@ -5,3 +5,4 @@ __pycache__/*
 allure_report/*
 *.sqlite3
 .vscode/*
+.env

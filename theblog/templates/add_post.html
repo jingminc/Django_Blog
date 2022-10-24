@@ -1,24 +1,31 @@
 {% extends 'base.html' %}
 {% block title %}Create a New Blog Post!{% endblock %} 
 {% block content %}
+<br>
+<div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-4  mt-3 left  top">
+        {% if user.is_authenticated %}
+            <h1>Add Post...</h1>
+            <br/><br/>
+            <div class="form-group">
+                <div class="input-group">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.media }}
+                    {{ form.as_p }}
+                    <button class="btn btn-secondary">Add Post</button>
+                </div>    
+            </div>
+            <script>
+                var name = "{{ user.id }}";
+                document.getElementById('chen').value = name;
+            </script>
 
-{% if user.is_authenticated %}
-    <h1>Add Post...</h1>
-    <br/><br/>
-    <div class="form-group">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.media }}
-            {{ form.as_p }}
-            <button class="btn btn-secondary">Add Post</button>
+        {% else %}
+        You're not allowed here.
+        {% endif %}
     </div>
-    <script>
-        var name = "{{ user.id }}";
-        document.getElementById('chen').value = name;
-    </script>
-
-{% else %}
-You're not allowed here.
-{% endif %}
+</div>
 
 {% endblock %} 

@@ -1,32 +1,37 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% block content %}
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+    }
 
-<h1>Post</h1>
+    .display-flex {
+        display: flex;
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
 
-<ul>
-{% for post in object_list %}
-    <li><a href="{% url 'article-detail' post.pk %}">
-        {{ post.title }}</a> - 
+    .div-size {
+        border: 1px solid red;
+        width: 150px;
+        height: 120px;
+        
+    }
+</style>
 
-        - <a href="{% url 'category' post.category %}">{{ post.category }}</a>
-        - {{ post.author.first_name }} 
-        {{ post.author.last_name }} - 
-        {{ post.post_date}} <small>
+{% block  jumbotron %}
+    {% include 'jumbotron.html' %}
+{% endblock %}
 
-            {% if user.is_authenticated %}
-                {% if user.id == post.author.id %}
-                    - <a href="{% url 'update_post' post.pk %}">(Edit)</a>
-                    <a href="{% url 'delete_post' post.pk %}">(Delete)</a>
-                {% endif %}
-            {% endif %}
-        </small><br/>
-    {{ post.snippet }}
-    </li>
-<br/>
-{% endfor %}
-</ul>
+<div class="container">
+    <div class="row">
+        {% include 'article_list.html' %}
+        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+    </div>
+</div>
+{% block pagination %}
+    {% include 'pagination.html' %}
+{% endblock pagination %}
 
-
-
-
-{% endblock %} 
+{% endblock %}

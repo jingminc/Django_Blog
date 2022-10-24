@@ -2,22 +2,27 @@
 {% block title %}Create a New Profile Page{% endblock %} 
 {% block content %}
 
-{% if user.is_authenticated %}
-    <h1>Create Profile Page...</h1>
-    <br/><br/>
-    <div class="form-group">
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn btn-secondary">Create Profile Page</button>
-    </div>
-    <script>
-        var name = "{{ user.id }}";
-        document.getElementById('chen').value = name;
-    </script>
+<div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-4  mt-3 left  top">
+        {% if user.is_authenticated %}
+            <h1>Create Profile Page</h1>
+            <br/>
+            <div class="form-group">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-secondary">Create Profile Page</button>
+            </div>
+            <script>
+                var name = "{{ user.id }}";
+                document.getElementById('chen').value = name;
+            </script>
 
-{% else %}
-You're not allowed here.
-{% endif %}
+        {% else %}
+        You're not allowed here.
+        {% endif %}
+    </div>
+</div>
 
 {% endblock %} 

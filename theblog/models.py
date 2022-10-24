@@ -1,9 +1,14 @@
-import profile
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from datetime import datetime, date
 from ckeditor.fields import RichTextField
+from django.contrib.sitemaps import Sitemap
+
+STATUS = (
+    (0,"Draft"),
+    (1,"Publish")
+)
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -37,10 +42,17 @@ class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     body = RichTextField(blank=True, null=True)
     #body = models.TextField()
+    updated_on = models.DateTimeField(auto_now= True)
     post_date = models.DateField(auto_now_add=True)
     category = models.CharField(max_length=255, default='uncategorized')
     snippet = models.CharField(max_length=255)
     likes = models.ManyToManyField(User, related_name='blog_posts')
+    status = models.IntegerField(choices=STATUS, default=0)
+    total_views = models.PositiveIntegerField('views',default=0)
+    comment_num = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['-post_date']
 
     def total_likes(self):
         return self.likes.count()
